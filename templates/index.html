@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Loan Approval Predictor</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+  <style>
+    * {
+      box-sizing: border-box;
+      font-family: 'Poppins', sans-serif;
+    }
+
+    body {
+      margin: 0;
+      padding: 0;
+      background: linear-gradient(to right, #c8e6c9, #b2ebf2);
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .wrapper {
+      display: flex;
+      background: white;
+      border-radius: 15px;
+      box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+      max-width: 1100px;
+      width: 100%;
+      padding: 20px;
+      gap: 20px;
+      flex-wrap: wrap;
+    }
+
+    .form-container {
+      flex: 1 1 60%;
+    }
+
+    .form-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 10px 20px;
+    }
+
+    .form-grid label {
+      display: block;
+      margin-top: 5px;
+      font-weight: 600;
+      color: #333;
+      font-size: 14px;
+    }
+
+    .form-grid select,
+    .form-grid input[type="number"] {
+      width: 100%;
+      padding: 8px;
+      margin-top: 2px;
+      border: 1px solid #ccc;
+      border-radius: 6px;
+      font-size: 14px;
+    }
+
+    button {
+      margin-top: 15px;
+      width: 100%;
+      padding: 10px;
+      background: linear-gradient(to right, #26a69a, #00897b);
+      color: white;
+      border: none;
+      border-radius: 8px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: 0.3s ease;
+    }
+
+    button:hover {
+      background: linear-gradient(to right, #00796b, #004d40);
+    }
+
+    .result-container {
+      flex: 1 1 35%;
+      background: #e0f2f1;
+      border-radius: 10px;
+      padding: 20px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #004d40;
+      font-weight: 600;
+      font-size: 16px;
+      text-align: center;
+    }
+
+    h2 {
+      text-align: center;
+      color: #00796b;
+      margin-bottom: 15px;
+    }
+
+    @media (max-width: 768px) {
+      .wrapper {
+        flex-direction: column;
+        padding: 15px;
+      }
+
+      .form-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .result-container {
+        font-size: 14px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="wrapper">
+    <div class="form-container">
+      <h2>Loan Prediction</h2>
+      <form action="/predict" method="POST">
+        <div class="form-grid">
+          <div>
+            <label for="gender">Gender:</label>
+            <select name="Gender" required>
+              <option value="Male">Male</option>
+              <option value="Female">Female</option>
+            </select>
+          </div>
+
+          <div>
+            <label for="married">Married:</label>
+            <select name="Married" required>
+              <option value="Yes">Yes</option>
+              <option value="No">No</option>
+            </select>
+          </div>
+
+          <div>
+            <label for="dependents">Dependents:</label>
+            <select name="Dependents" required>
+              <option value="0">0</option>
+              <option value="1">1</option>
+              <option value="2">2</option>
+              <option value="3+">3+</option>
+            </select>
+          </div>
+
+          <div>
+            <label for="education">Education:</label>
+            <select name="Education" required>
+              <option value="Graduate">Graduate</option>
+              <option value="Not Graduate">Not Graduate</option>
+            </select>
+          </div>
+
+          <div>
+            <label for="self_employed">Self Employed:</label>
+            <select name="Self_Employed" required>
+              <option value="Yes">Yes</option>
+              <option value="No">No</option>
+            </select>
+          </div>
+
+          <div>
+            <label for="applicant_income">Applicant Income:</label>
+            <input type="number" name="ApplicantIncome" required min="0" placeholder="e.g. 5000" />
+          </div>
+
+          <div>
+            <label for="coapplicant_income">Coapplicant Income:</label>
+            <input type="number" name="CoapplicantIncome" required min="0" placeholder="e.g. 1500" />
+          </div>
+
+          <div>
+            <label for="loan_amount">Loan Amount:</label>
+            <input type="number" name="LoanAmount" required min="0" placeholder="e.g. 100" />
+          </div>
+
+          <div>
+            <label for="loan_term">Loan Term (months):</label>
+            <input type="number" name="Loan_Amount_Term" required min="0" placeholder="e.g. 360" />
+          </div>
+
+          <div>
+            <label for="credit_history">Credit History:</label>
+            <select name="Credit_History" required>
+              <option value="1">1</option>
+              <option value="0">0</option>
+            </select>
+          </div>
+
+          <div>
+            <label for="property_area">Property Area:</label>
+            <select name="Property_Area" required>
+              <option value="Urban">Urban</option>
+              <option value="Semiurban">Semiurban</option>
+              <option value="Rural">Rural</option>
+            </select>
+          </div>
+        </div>
+
+        <button type="submit">Predict</button>
+      </form>
+    </div>
+
+    <div class="result-container">
+      {% if prediction %}
+        {{ prediction }}
+      {% else %}
+        Result will appear here after submission.
+      {% endif %}
+    </div>
+  </div>
+</body>
+</html>
