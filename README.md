@@ -6,7 +6,6 @@ This project presents a machine learning-based approach to predict whether a loa
 
 - Objective: Predict loan approval status based on applicant data.
 - Model: Random Forest Classifier
-- Custom Threshold: 0.42 (to fine-tune business logic)
 - Deployment: Flask Web App
 
 ## Features Used
